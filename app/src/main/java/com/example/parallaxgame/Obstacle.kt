@@ -96,7 +96,19 @@ class Obstacle(context: Context, resId: Int, private val screenW: Int, private v
     }
 
     private fun updateBounds() {
-        bounds.set(x, y, x + bmp.width, y + bmp.height)
+        val insetX = bmp.width * 0.2f
+        val insetY = bmp.height * 0.2f
+        val left = x + insetX
+        val top = y + insetY
+        val right = x + bmp.width - insetX
+        val bottom = y + bmp.height - insetY
+
+        bounds.set(
+            left,
+            top,
+            if (right > left) right else left,
+            if (bottom > top) bottom else top
+        )
     }
 
     fun draw(canvas: Canvas) {
